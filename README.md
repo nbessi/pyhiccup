@@ -6,7 +6,7 @@ pyhiccup pre-alpha
 Python version of https://github.com/weavejester/hiccup
 
 
-Pyhiccup is a library for representing HTML in python. It uses list or tuple
+Pyhiccup is a library for representing HTML in Python. It uses list or tuple
 to represent elements, and dict to represent an element's attributes.
 
 Install

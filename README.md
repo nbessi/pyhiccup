@@ -22,14 +22,14 @@ Here is a basic example of Hiccup syntax:
 ```python
 >>> from pyhiccup.core import html
 >>> data = ['html',
-        ['div',
-         {'class': 'a_class', 'data-y': 23},
-         ['span',
-          'blabla',
-          ['ul',
-           [['li', str(x)] for x in xrange(20)]]]],
-        ['ul',
-         [['li', str(x)] for x in xrange(20)]]]
+             ['div',
+              {'class': 'a_class', 'data-y': 23},
+              ['span',
+               'blabla',
+               ['ul',
+                [['li', str(x)] for x in xrange(20)]]]],
+             ['ul',
+              [['li', str(x)] for x in xrange(20)]]]
 >>> html(data)
 >>>"<html><div  data-y=\"23\" class=\"a_class\"><span>blabla<ul><li>0</li>
 <li>1</li>

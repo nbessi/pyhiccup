@@ -1,6 +1,8 @@
 pyhiccup pre-alpha
 ==================
 
+!! Under heavy development do not use in production !!
+
 Python version of https://github.com/weavejester/hiccup
 
 

@@ -26,7 +26,7 @@ TREE_TYPE = (list, tuple)
 def format_attributes(attributes):
     output = []
     for item in attributes.items():
-        output.append('%s=\\"%s\\"' % item)
+        output.append('%s=\"%s\"' % item)
     output.insert(0, " ")
     return ' '.join(output)
 

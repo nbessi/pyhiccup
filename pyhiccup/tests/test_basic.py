@@ -8,8 +8,8 @@ from ..core import html
 
 CLEAN_REGEX = re.compile('[\t\r\n]')
 
-class basic_html(unittest.TestCase):
 
+class basic_html(unittest.TestCase):
 
     def normalize_result(self, raw_string):
         """Remove tab, carriage and space around balise

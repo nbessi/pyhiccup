@@ -1,0 +1,13 @@
+language: python
+
+python:
+  - "2.6"
+  - "2.7"
+
+install: "pip install -r test-requirements.txt"
+
+script: flake8
+script: nosetests  --with-coverage pyhiccup/tests
+
+after_success:
+  - coveralls

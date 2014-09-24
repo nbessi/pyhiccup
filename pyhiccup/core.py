@@ -26,7 +26,7 @@ TREE_TYPE = (list, tuple)
 def format_attributes(attributes):
     output = []
     for item in attributes.items():
-        output.append('%s=\\"%s\\"' % item)
+        output.append('%s=\"%s\"' % item)
     output.insert(0, " ")
     return ' '.join(output)
 
@@ -40,7 +40,7 @@ def convert_tree(*args):
     for x in args:
         if isinstance(x, TREE_TYPE):
             if isinstance(x[0], TREE_TYPE):
-                return convert_tree(*x)
+                accu.extend(convert_tree(*x))
             else:
                 accu.extend(convert_leaf(*x))
         else:
@@ -79,16 +79,3 @@ def convert_leaf(*args):
 def html(value):
     res = convert_tree(value)
     return ''.join(res)
-
-data = ['html',
-        ['div',
-         {'class': 'a_class', 'data-y': 23},
-         ['span',
-          'blabla',
-          ['ul',
-           [['li', str(x)] for x in xrange(20)]]]],
-        ['ul',
-         [['li', str(x)] for x in xrange(20)]]]
-
-res = html(data)
-print res

@@ -40,7 +40,7 @@ def convert_tree(*args):
     for x in args:
         if isinstance(x, TREE_TYPE):
             if isinstance(x[0], TREE_TYPE):
-                return convert_tree(*x)
+                accu.extend(convert_tree(*x))
             else:
                 accu.extend(convert_leaf(*x))
         else:

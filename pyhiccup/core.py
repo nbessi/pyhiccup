@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Author: Nicolas Bessi
-#    Copyright 2014 Camptocamp SA
+#    Copyright 2014
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -14,7 +14,7 @@
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU Affero General Public License
+#    You should have received a copy of the GNU General Public License 3
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
@@ -24,6 +24,19 @@ TREE_TYPE = (list, tuple)
 
 
 def format_attributes(attributes):
+    """Transform dict to XMl/HTMl attributes
+
+    {'class': 'a-class', 'data-sel': 'a-sel'}
+    returns ``class="a-class" data-sel="a-sel"``
+
+    :param attributes: dict of XML/HMTL attributes to transform
+                       to string
+    :type attributes: dict
+
+    :return: a list of attributes eg. ``class="a-class" data-sel="a-sel"``
+    :rtype: basestring
+
+    """
     output = []
     for item in attributes.items():
         output.append('%s=\"%s\"' % item)
@@ -32,10 +45,30 @@ def format_attributes(attributes):
 
 
 def self_closing(btype):
+    """Predicate that determine if tag is self closing
+
+    :param btype: name of tag eg. `div`
+    :type btype: str, unicode
+
+    :return: True if tag is self closing else False
+    :rtype: bool
+
+    """
     return False
 
 
 def convert_tree(*args):
+    """Transform a list describing HTML/XML to raw HTML/XML list
+
+    It is uses a mutual recursion to walk tree and transform
+
+    :param args: list of list describing HTML
+    :type args: list, tuple
+
+    :return: a list of string
+    :rtype: list
+
+    """
     accu = []
     for x in args:
         if isinstance(x, TREE_TYPE):
@@ -49,6 +82,17 @@ def convert_tree(*args):
 
 
 def convert_leaf(*args):
+    """Transform a list describing HTML/XML leaf raw HTML/XML lsit
+
+    It is uses a mutual recursion to walk tree and transform leaf
+
+    :param args: leaf list describing HTML
+    :type args: list, tuple
+
+    :return: a list of string
+    :rtype: list
+
+    """
     accu = ["<"]
     btype = args[0]
     accu.append(btype)
@@ -77,5 +121,14 @@ def convert_leaf(*args):
 
 
 def html(value):
+    """Transform a list describing HTML/XML to raw HTML/XML
+
+    :param args: list of list describing HTML
+    :type args: list, tuple
+
+    :return: HTML/XML string representation
+    :rtype: str, unicode
+
+    """
     res = convert_tree(value)
     return ''.join(res)

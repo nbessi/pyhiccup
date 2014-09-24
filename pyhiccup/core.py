@@ -79,16 +79,3 @@ def convert_leaf(*args):
 def html(value):
     res = convert_tree(value)
     return ''.join(res)
-
-data = ['html',
-        ['div',
-         {'class': 'a_class', 'data-y': 23},
-         ['span',
-          'blabla',
-          ['ul',
-           [['li', str(x)] for x in xrange(20)]]]],
-        ['ul',
-         [['li', str(x)] for x in xrange(20)]]]
-
-res = html(data)
-print res

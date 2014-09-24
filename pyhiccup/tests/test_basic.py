@@ -30,7 +30,7 @@ class basic_html(unittest.TestCase):
         self.assertEqual(clean, u"Hello World")
 
     def test_minimal_conversion(self):
-        data = data = [
+        data = [
             'html',
             ['div',
              {'class': 'a-class', 'data-y': '23'},

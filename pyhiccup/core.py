@@ -18,7 +18,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# Mutual recursive parser
+import logging
+
+_logger = logging.getLogger('pyhiccup.convert')
 
 TREE_TYPE = (list, tuple)
 
@@ -57,34 +59,10 @@ def self_closing(btype):
     return False
 
 
-def convert_tree(*args):
-    """Transform a list describing HTML/XML to raw HTML/XML list
+def convert_tree(node):
+    """Transform a list describing HTML leaf to a list of HTML string
 
-    It is uses a mutual recursion to walk tree and transform
-
-    :param args: list of list describing HTML
-    :type args: list, tuple
-
-    :return: a list of string
-    :rtype: list
-
-    """
-    accu = []
-    for x in args:
-        if isinstance(x, TREE_TYPE):
-            if isinstance(x[0], TREE_TYPE):
-                accu.extend(convert_tree(*x))
-            else:
-                accu.extend(convert_leaf(*x))
-        else:
-            accu.extend(convert_leaf(*x))
-    return accu
-
-
-def convert_leaf(*args):
-    """Transform a list describing HTML/XML leaf raw HTML/XML lsit
-
-    It is uses a mutual recursion to walk tree and transform leaf
+    ready to be joined
 
     :param args: leaf list describing HTML
     :type args: list, tuple
@@ -93,31 +71,37 @@ def convert_leaf(*args):
     :rtype: list
 
     """
-    accu = ["<"]
-    btype = args[0]
-    accu.append(btype)
-    rest = args[1:]
+    btype = node[0]
+    rest = node[1:]
+    attrs = ''
     inner_trees = []
-    inner_element = None
+    inner_element = ''
     for element in rest:
         if isinstance(element, TREE_TYPE):
-            inner_trees.append(element)
+            if isinstance(element[0], TREE_TYPE):
+                inner_trees.extend(element)
+            else:
+                inner_trees.append(element)
         elif isinstance(element, dict):
-            accu.append(format_attributes(element))
+            attrs = format_attributes(element)
         else:
             inner_element = element
     if self_closing(btype):
-        accu.append("/>")
         if inner_trees or inner_element:
             raise ValueError('%s can not have inner values' % btype)
+        yield '<%s/>' % btype
     else:
-        accu.append(">")
+        yield '<%s%s>' % (
+            btype,
+            attrs,
+        )
         if inner_element:
-            accu.append(inner_element)
+            yield inner_element
         if inner_trees:
-            accu.extend(convert_tree(*inner_trees))
-        accu.append("</%s>\n" % btype)
-    return accu
+            for ext in inner_trees:
+                for x in convert_tree(ext):
+                    yield x
+        yield '</%s>' % btype
 
 
 def html(value):
@@ -126,9 +110,10 @@ def html(value):
     :param args: list of list describing HTML
     :type args: list, tuple
 
-    :return: HTML/XML string representation
+    :return: HTML string representation
     :rtype: str, unicode
 
     """
-    res = convert_tree(value)
-    return ''.join(res)
+    converted = convert_tree(value)
+    _logger.debug(converted)
+    return ''.join(converted)

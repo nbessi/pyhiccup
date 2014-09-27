@@ -5,14 +5,14 @@
 #    Copyright 2014
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
+#    it under the terms of the GNU General Public License as
 #    published by the Free Software Foundation, either version 3 of the
 #    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
+#    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License 3
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
@@ -24,7 +24,7 @@ try:
 except ImportError:
     import unittest
 
-from ..core import html
+from ..core import html5
 
 CLEAN_REGEX = re.compile('[\t\r\n]')
 
@@ -52,15 +52,15 @@ class basic_html(unittest.TestCase):
     def test_minimal_conversion(self):
         """Test basic HTML and list comprehension"""
         data = [
-            'html',
             ['div',
              {'class': 'a-class', 'data-y': '23'},
              ['span', 'my-text',
-              ['ul', [['li', str(x)] for x in ['coffe', 'milk', 'sugar']]]]],
+              ['ul', [['li', str(x)] for x in ['coffe', 'milk', 'sugar']]]]]
         ]
 
-        awaited = ('<html><div  data-y=\"23\" class=\"a-class\">'
-                   '<span>my-text<ul><li>coffe</li><li>milk</li>'
-                   '<li>sugar</li></ul></span></div></html>')
-        conv = html(data)
+
+        awaited = ('<!DOCTYPE html><html><div data-y="23" class="a-class">'
+                   '<span>my-text<ul><li>coffe</li><li>milk</li><li>sugar</li>'
+                   '</ul></span></div></html>')
+        conv = html5(data)
         self.assertEquals(awaited, self.normalize_result(conv))

@@ -24,7 +24,7 @@ try:
 except ImportError:
     import unittest
 
-from ..core import html
+from ..core import html5
 
 CLEAN_REGEX = re.compile('[\t\r\n]')
 
@@ -52,15 +52,15 @@ class basic_html(unittest.TestCase):
     def test_minimal_conversion(self):
         """Test basic HTML and list comprehension"""
         data = [
-            'html',
             ['div',
              {'class': 'a-class', 'data-y': '23'},
              ['span', 'my-text',
-              ['ul', [['li', str(x)] for x in ['coffe', 'milk', 'sugar']]]]],
+              ['ul', [['li', str(x)] for x in ['coffe', 'milk', 'sugar']]]]]
         ]
 
-        awaited = ('<html><div  data-y=\"23\" class=\"a-class\">'
-                   '<span>my-text<ul><li>coffe</li><li>milk</li>'
-                   '<li>sugar</li></ul></span></div></html>')
-        conv = html(data)
+
+        awaited = ('<!DOCTYPE html><html><div data-y="23" class="a-class">'
+                   '<span>my-text<ul><li>coffe</li><li>milk</li><li>sugar</li>'
+                   '</ul></span></div></html>')
+        conv = html5(data)
         self.assertEquals(awaited, self.normalize_result(conv))

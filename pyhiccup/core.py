@@ -12,13 +12,16 @@
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
+#    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License 3
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 import logging
+from itertools import chain
+
+from .page import DOC_TYPES
 
 _logger = logging.getLogger('pyhiccup.convert')
 
@@ -42,8 +45,7 @@ def format_attributes(attributes):
     output = []
     for item in attributes.items():
         output.append('%s=\"%s\"' % item)
-    output.insert(0, " ")
-    return ' '.join(output)
+    return " %s" % ' '.join(output)
 
 
 def self_closing(btype):
@@ -104,7 +106,7 @@ def convert_tree(node):
         yield '</%s>' % btype
 
 
-def html(value):
+def html5(value):
     """Transform a list describing HTML/XML to raw HTML/XML
 
     :param args: list of list describing HTML
@@ -114,6 +116,13 @@ def html(value):
     :rtype: str, unicode
 
     """
-    converted = convert_tree(value)
-    _logger.debug(converted)
+    value = ['html', value]
+    converted = chain(
+        [DOC_TYPES['html5']],
+        convert_tree(value)
+    )
+    _logger.debug(
+        list(chain([DOC_TYPES['html5']],
+                   convert_tree(value)))
+    )
     return ''.join(converted)

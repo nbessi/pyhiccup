@@ -28,14 +28,14 @@ Syntax
 Here is a basic example of pyhiccup syntax:
 
 ```python
->>> from pyhiccup.core import html
+>>> from pyhiccup.core import html5
 >>> data = [
-            'html',
-            ['div',
-             {'class': 'a-class', 'data-y': '23'},
-             ['span', 'my-text',
-              ['ul', [['li', str(x)] for x in ['coffe', 'milk', 'sugar']]]]],
-        ]
->>> html(data)
->>>"<html><div data-y=\"23\" class=\"a-class\"><span>my-text<ul><li>coffe</li><li>milk</li><li>sugar</li></ul></span></div></html>"
+        ['div',
+         {'class': 'a-class', 'data-y': '23'},
+         ['span', 'my-text',
+          ['ul', [['li', x] for x in ['coffe', 'milk', 'sugar']]]]]
+    ]
+>>> html5(data)
+>>>"<!DOCTYPE html>
+<html><div data-y="23" class="a-class"><span>my-text<ul><li>coffe</li><li>milk</li><li>sugar</li></ul></span></div></html>"
 ```

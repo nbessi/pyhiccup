@@ -54,6 +54,17 @@ def get_doc_type(doc_type):
 
 
 def get_html_enclosing_tag(etype, **kwargs):
+    """Generate html tag list representation
+
+    :param etype: html doc type `html5, html4, xhtml-strict,
+                  xhtml-transitional`
+    :type etype: str
+    :param kwargs: dict of attribute for HTML tag will override defaults
+    :type kwargs: dict
+
+    :return: html tag list representation ['html', {'xmlns': ...}]
+    :rtype: dict
+    """
     attrs = {}
     if etype in DOC_TYPES:
         attrs[u'lang'] = u'en'
@@ -66,4 +77,14 @@ def get_html_enclosing_tag(etype, **kwargs):
 
 
 def get_xml_enclosing_tag(etype, **kwargs):
+    """Generate XML root tag list representation
+
+    :param etype: root tag name
+    :type etype: str
+    :param kwargs: dict of attribute for root tag
+    :type kwargs: dict
+
+    :return: root xml tag list representation ['atag', {'attr': ...}]
+    :rtype: dict
+    """
     return [etype, kwargs]

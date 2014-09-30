@@ -50,19 +50,6 @@ def format_attributes(attributes):
     return " %s" % ' '.join(output)
 
 
-def self_closing(btype):
-    """Predicate that determine if tag is self closing
-
-    :param btype: name of tag eg. `div`
-    :type btype: str, unicode
-
-    :return: True if tag is self closing else False
-    :rtype: bool
-
-    """
-    return False
-
-
 def _convert_tree(node):
     """Transform a list describing HTML leaf to a list of HTML string
 
@@ -92,27 +79,22 @@ def _convert_tree(node):
             attrs = format_attributes(element)
         else:
             inner_element = element
-    if self_closing(btype):
-        if inner_trees or inner_element:
-            raise ValueError(u'%s can not have inner values' % btype)
-        yield u'<%s/>' % btype
+    if inner_element or inner_trees:
+        yield u'<%s%s>' % (
+            btype,
+            attrs,
+        )
+        yield inner_element
+        if inner_trees:
+            for ext in inner_trees:
+                for x in _convert_tree(ext):
+                    yield x
+            yield u'</%s>' % btype
     else:
-        if inner_element or inner_trees:
-            yield u'<%s%s>' % (
-                btype,
-                attrs,
-            )
-            yield inner_element
-            if inner_trees:
-                for ext in inner_trees:
-                    for x in _convert_tree(ext):
-                        yield x
-                yield u'</%s>' % btype
-        else:
-            yield u'<%s%s/>' % (
-                btype,
-                attrs,
-            )
+        yield u'<%s%s/>' % (
+            btype,
+            attrs,
+        )
 
 
 def _inclose_page(declaration, enclosing_tag, value):

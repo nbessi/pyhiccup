@@ -18,6 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import sys
 import re
 try:
     import unittest2 as unittest
@@ -106,8 +107,7 @@ class HTMLTest(CommonTest):
 
     def test_wrong_type(self):
         data = []
-        with self.assertRaises(ValueError):
-            html(data, etype='kaboom')
+        self.assertRaises(ValueError, html, data, 'kaboom')
 
 
 class XMLTest(CommonTest):

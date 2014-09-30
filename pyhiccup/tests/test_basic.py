@@ -24,12 +24,12 @@ try:
 except ImportError:
     import unittest
 
-from ..core import html5
+from ..core import html, xml
 
 CLEAN_REGEX = re.compile('[\t\r\n]')
 
 
-class basic_html(unittest.TestCase):
+class CommonTest(unittest.TestCase):
 
     def normalize_result(self, raw_string):
         """Remove tab, carriage and space around balise
@@ -49,18 +49,76 @@ class basic_html(unittest.TestCase):
         clean = self.normalize_result(raw)
         self.assertEqual(clean, u"Hello World")
 
-    def test_minimal_conversion(self):
+
+class HTMLTest(CommonTest):
+
+    def test_comprehention_conversion(self):
         """Test basic HTML and list comprehension"""
         data = [
-            ['div',
-             {'class': 'a-class', 'data-y': '23'},
-             ['span', 'my-text',
-              ['ul', [['li', str(x)] for x in ['coffe', 'milk', 'sugar']]]]]
+            [u'div',
+             {u'class': 'a-class', 'data-y': '23'},
+             [u'span', 'my-text',
+              [u'ul', [['li', x] for x in [u'café', u'milk', u'sugar']]]]]
         ]
 
+        awaited = (u'<!DOCTYPE html><html lang="en" xml:lang="en" dir="rtl">'
+                   u'<div data-y="23" class="a-class"><span>my-text<ul>'
+                   u'<li>café<li>milk<li>sugar</ul></span></div></html>')
+        conv = html(data)
+        self.assertEquals(awaited, self.normalize_result(conv))
 
-        awaited = ('<!DOCTYPE html><html><div data-y="23" class="a-class">'
-                   '<span>my-text<ul><li>coffe</li><li>milk</li><li>sugar</li>'
-                   '</ul></span></div></html>')
-        conv = html5(data)
+    def test_html5_doc_type(self):
+        """Test HTML 5 DOCTYPE"""
+        data = []
+        awaited = u'<!DOCTYPE html><html lang="en" xml:lang="en" dir="rtl"/>'
+        conv = html(data, etype='html5')
+        self.assertEquals(awaited, self.normalize_result(conv))
+
+    def test_html4_doc_type(self):
+        """Test HTML 4 DOCTYPE"""
+        data = []
+        awaited = (u'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" '
+                   u'"http://www.w3.org/TR/html4/strict.dtd"><html lang="en"'
+                   u' xml:lang="en" dir="rtl"/>')
+        conv = html(data, etype='html4')
+        self.assertEquals(awaited, self.normalize_result(conv))
+
+    def test_xhtml_strict_doc_type(self):
+        """Test XHTML strict DOCTYPE"""
+        data = []
+        awaited = (u'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" '
+                   u'"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
+                   u'<html lang="en" xml:lang="en" dir="rtl" '
+                   u'xmlns="http://www.w3.org/1999/xhtml"/>')
+        conv = html(data, etype='xhtml-strict')
+        self.assertEquals(awaited, self.normalize_result(conv))
+
+    def test_xhtml_transitional_doc_type(self):
+        """Test XHTML transitional DOCTYPE"""
+        data = []
+        awaited = (u'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML '
+                   u'1.0 Transitional//EN" '
+                   u'"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
+                   u'<html lang="en" xml:lang="en" dir="rtl" '
+                   u'xmlns="http://www.w3.org/1999/xhtml"/>')
+        conv = html(data, etype='xhtml-transitional')
+        self.assertEquals(awaited, self.normalize_result(conv))
+
+    def test_wrong_type(self):
+        data = []
+        with self.assertRaises(ValueError):
+            html(data, etype='kaboom')
+
+
+class XMLTest(CommonTest):
+
+    def test_minimal_xml(self):
+        """Test minimal XML"""
+        data = ['form-desc',
+                ['field', {'name': 'a_name'}],
+                ['field', {'name': 'a_other_name'}]]
+        conv = xml(data, 'foo-ns', bar='an_attr')
+        awaited = (u'<?xml version="1.0" encoding="UTF-8"?>'
+                   u'<foo-ns bar="an_attr"><form-desc><field name="a_name"/>'
+                   u'<field name="a_other_name"/></form-desc></foo-ns>')
         self.assertEquals(awaited, self.normalize_result(conv))

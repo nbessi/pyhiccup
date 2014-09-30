@@ -20,14 +20,50 @@
 ##############################################################################
 
 DOC_TYPES = {
-    'html4': "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" "
-             "\"http://www.w3.org/TR/html4/strict.dtd\">\n",
+    'html4': u"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" "
+             u"\"http://www.w3.org/TR/html4/strict.dtd\">\n",
 
-    'xhtml-strict': "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 ""Strict//EN\" "
-                    "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n",
+    'xhtml-strict': u"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 ""Strict//EN\" "
+                    u"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n",
 
-    'xhtml-transitional': "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" "
-                          "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n",
+    'xhtml-transitional': u"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" "
+                          u"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n",
 
-    'html5': "<!DOCTYPE html>\n",
+    'html5': u"<!DOCTYPE html>\n",
 }
+
+DEFAULT_XMLNS = u'http://www.w3.org/1999/xhtml'
+XMl_DECLARATION = u'<?xml version="1.0" encoding="UTF-8"?>'
+
+
+def get_doc_type(doc_type):
+    """Return a DOCTYPE declaration
+
+    :param doc_type: doc type string must be in ``page.DOC_TYPES``
+    :type doc_type: str
+    :return: DOCTYPE declaration
+    :rtype: str
+
+    """
+    if doc_type not in DOC_TYPES:
+        raise ValueError(
+            'Invalid DOCTYPE %s available values are %s' %
+            (doc_type, DOC_TYPES.keys())
+        )
+    return DOC_TYPES[doc_type]
+
+
+def get_html_enclosing_tag(etype, **kwargs):
+    attrs = {}
+    if etype in DOC_TYPES:
+        attrs[u'lang'] = u'en'
+        attrs[u'dir'] = u'rtl'
+        attrs[u'xml:lang'] = u'en'
+    if 'xhtml' in etype:
+        attrs[u'xmlns'] = DEFAULT_XMLNS
+    attrs.update(kwargs)
+    return ['html', attrs]
+
+
+def get_xml_enclosing_tag(etype, **kwargs):
+    return [etype, kwargs]

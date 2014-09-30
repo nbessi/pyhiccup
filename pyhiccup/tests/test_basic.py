@@ -18,7 +18,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import sys
 import logging
 import re
 try:
@@ -116,7 +115,6 @@ class HTMLTest(CommonTest):
         _logger.setLevel(logging.DEBUG)
         html([])
         _logger.setLevel(current_level)
-
 
 
 class XMLTest(CommonTest):

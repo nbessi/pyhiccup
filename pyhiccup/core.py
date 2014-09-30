@@ -42,7 +42,6 @@ def format_attributes(attributes):
 
     :return: a list of attributes eg. ``class="a-class" data-sel="a-sel"``
     :rtype: str
-
     """
     output = []
     for item in attributes.items():
@@ -60,7 +59,6 @@ def _convert_tree(node):
 
     :return: a list of string
     :rtype: list
-
     """
     btype = node[0]
     rest = node[1:]
@@ -104,9 +102,9 @@ def _inclose_page(declaration, enclosing_tag, value):
     :type declaration: str
     :param enclosing_tag: page code list type e.g. `['html', {'xmlns':...}]`
     :type enclosing_tag: str
+
     :param value: the list to be converted to *ML
     :type value: str
-
     """
     to_convert = copy.deepcopy(enclosing_tag)
     to_convert.append(value)
@@ -132,9 +130,9 @@ def html(value, etype='html5', **kwargs):
     :type etype: str
     :param kwargs: dict of enclosing tag attributes
     :type kwargs: dict
+
     :return: HTML string representation
     :rtype: str, unicode
-
     """
     declaration = get_doc_type(etype)
     enclosing_tag = get_html_enclosing_tag(etype)
@@ -151,9 +149,9 @@ def xml(value, etype, **kwargs):
     :type etype: str
     :param kwargs: dict of enclosing tag attributes
     :type kwargs: dict
+
     :return: XML string representation
     :rtype: str, unicode
-
     """
     declaration = XMl_DECLARATION
     enclosing_tag = get_xml_enclosing_tag(etype, **kwargs)

@@ -19,13 +19,14 @@
 #
 ##############################################################################
 import sys
+import logging
 import re
 try:
     import unittest2 as unittest
 except ImportError:
     import unittest
 
-from ..core import html, xml
+from ..core import html, xml, _logger
 
 CLEAN_REGEX = re.compile('[\t\r\n]')
 
@@ -108,6 +109,14 @@ class HTMLTest(CommonTest):
     def test_wrong_type(self):
         data = []
         self.assertRaises(ValueError, html, data, 'kaboom')
+
+    def test_debug_logging(self):
+        """Ensure that debug logging will not break"""
+        current_level = _logger.getEffectiveLevel()
+        _logger.setLevel(logging.DEBUG)
+        html([])
+        _logger.setLevel(current_level)
+
 
 
 class XMLTest(CommonTest):

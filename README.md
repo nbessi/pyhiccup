@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/nbessi/pyhiccup.svg?branch=master)](https://travis-ci.org/nbessi/pyhiccup)
-[![Coverage Status](https://coveralls.io/repos/nbessi/pyhiccup/badge.png)](https://coveralls.io/r/nbessi/pyhiccup)
-
+[![Coverage Status](https://img.shields.io/coveralls/nbessi/pyhiccup.svg)](https://coveralls.io/r/nbessi/pyhiccup?branch=master)
 pyhiccup pre-alpha
 ==================
 

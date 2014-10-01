@@ -53,7 +53,7 @@ class CommonTest(unittest.TestCase):
 
 class HTMLTest(CommonTest):
 
-    def test_comprehention_conversion(self):
+    def test_comprehension_conversion(self):
         """Test basic HTML and list comprehension"""
         data = [
             [u'div',

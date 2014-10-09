@@ -21,7 +21,7 @@
 from __future__ import unicode_literals
 import logging
 
-from ..core import html, xml, _logger
+from ..core import html, xml, _logger, convert
 from .common import CommonTest
 
 
@@ -78,6 +78,13 @@ class HTMLTest(CommonTest):
                    '<html dir="rtl" lang="en" xml:lang="en" '
                    'xmlns="http://www.w3.org/1999/xhtml"/>')
         conv = html(data, etype='xhtml-transitional')
+        self.assertEquals(awaited, self.normalize_result(conv))
+
+    def test_convert(self):
+        """Test block_convert"""
+        data = ['div']
+        awaited = '<div/>'
+        conv = convert(data)
         self.assertEquals(awaited, self.normalize_result(conv))
 
     def test_wrong_type(self):

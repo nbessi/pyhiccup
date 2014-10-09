@@ -23,7 +23,7 @@ Install
 -------
 ::
 
-    pip install pyhiccup
+    pip install pyhiccup --pre
 
 Syntax
 ------

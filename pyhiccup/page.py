@@ -54,7 +54,7 @@ def get_doc_type(doc_type):
     return DOC_TYPES[doc_type]
 
 
-def get_html_enclosing_tag(etype, **kwargs):
+def build_html_enclosing_tag(etype, **kwargs):
     """Generate html tag list representation
 
     :param etype: html doc type `html5, html4, xhtml-strict,
@@ -77,7 +77,7 @@ def get_html_enclosing_tag(etype, **kwargs):
     return ['html', attrs]
 
 
-def get_xml_enclosing_tag(etype, **kwargs):
+def build_xml_enclosing_tag(etype, **kwargs):
     """Generate XML root tag list representation
 
     :param etype: root tag name

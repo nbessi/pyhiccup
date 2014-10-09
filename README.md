@@ -27,11 +27,11 @@ Here is a basic example of pyhiccup syntax:
 ```python
 >>> from pyhiccup.core import html
 >>> data = [
-        ['div',
-         {'class': 'a-class', 'data-y': '23'},
-         ['span', 'my-text',
-          ['ul', [['li', x] for x in ['café', 'milk', 'sugar']]]]]
-    ]
+>>>     ['div',
+>>>      {'class': 'a-class', 'data-y': '23'},
+>>>      ['span', 'my-text',
+>>>       ['ul', [['li', x] for x in ['café', 'milk', 'sugar']]]]]
+>>> ]
 >>> html(data)
 u'<!DOCTYPE html><html lang="en" xml:lang="en" dir="rtl"><div data-y="23" class="a-class"><span>my-text<ul><li>café<li>milk<li>sugar</ul></span></div></html>'
 ```

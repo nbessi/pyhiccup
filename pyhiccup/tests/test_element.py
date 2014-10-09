@@ -89,7 +89,8 @@ class ElementTest(CommonTest):
                      alt='donut',
                      height='20px',
                      width='10px')
-        awaited = ('<img src="http://homer.com/tho.jpg" '
-                   'alt="donut" width="10px" height="20px"/>')
+        awaited = ('<img alt="donut" height="20px" '
+                   'src="http://homer.com/tho.jpg" '
+                   'width="10px"/>')
         conv = ''.join(_convert_tree(data))
         self.assertEquals(awaited, self.normalize_result(conv))

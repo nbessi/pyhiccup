@@ -36,8 +36,8 @@ class HTMLTest(CommonTest):
               [u'ul', [['li', x] for x in [u'café', u'milk', u'sugar']]]]]
         ]
 
-        awaited = ('<!DOCTYPE html><html lang="en" xml:lang="en" dir="rtl">'
-                   '<div data-y="23" class="a-class"><span>my-text'
+        awaited = ('<!DOCTYPE html><html dir="rtl" lang="en" xml:lang="en">'
+                   '<div class="a-class" data-y="23"><span>my-text'
                    '<ul><li>caf\xe9</li><li>milk</li><li>sugar</li></ul>'
                    '</span></div></html>')
         conv = html(data)
@@ -46,7 +46,7 @@ class HTMLTest(CommonTest):
     def test_html5_doc_type(self):
         """Test HTML 5 DOCTYPE"""
         data = []
-        awaited = '<!DOCTYPE html><html lang="en" xml:lang="en" dir="rtl"/>'
+        awaited = '<!DOCTYPE html><html dir="rtl" lang="en" xml:lang="en"/>'
         conv = html(data, etype='html5')
         self.assertEquals(awaited, self.normalize_result(conv))
 
@@ -54,8 +54,8 @@ class HTMLTest(CommonTest):
         """Test HTML 4 DOCTYPE"""
         data = []
         awaited = ('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" '
-                   '"http://www.w3.org/TR/html4/strict.dtd"><html lang="en"'
-                   ' xml:lang="en" dir="rtl"/>')
+                   '"http://www.w3.org/TR/html4/strict.dtd"><html dir="rtl" lang="en"'
+                   ' xml:lang="en"/>')
         conv = html(data, etype='html4')
         self.assertEquals(awaited, self.normalize_result(conv))
 
@@ -64,7 +64,7 @@ class HTMLTest(CommonTest):
         data = []
         awaited = ('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" '
                    '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
-                   '<html lang="en" xml:lang="en" dir="rtl" '
+                   '<html dir="rtl" lang="en" xml:lang="en" '
                    'xmlns="http://www.w3.org/1999/xhtml"/>')
         conv = html(data, etype='xhtml-strict')
         self.assertEquals(awaited, self.normalize_result(conv))
@@ -75,7 +75,7 @@ class HTMLTest(CommonTest):
         awaited = ('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML '
                    '1.0 Transitional//EN" '
                    '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
-                   '<html lang="en" xml:lang="en" dir="rtl" '
+                   '<html dir="rtl" lang="en" xml:lang="en" '
                    'xmlns="http://www.w3.org/1999/xhtml"/>')
         conv = html(data, etype='xhtml-transitional')
         self.assertEquals(awaited, self.normalize_result(conv))

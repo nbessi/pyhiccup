@@ -28,7 +28,10 @@ Install
 Syntax
 ------
 
-Here is a basic example of pyhiccup syntax ::
+Here is a basic example of pyhiccup syntax.
+
+.. code-block:: python
+
 
   >>> from pyhiccup.core import html
   >>> data = [
@@ -41,7 +44,9 @@ Here is a basic example of pyhiccup syntax ::
   u'<!DOCTYPE html><html lang="en" xml:lang="en" dir="rtl"><div data-y="23" class="a-class"><span>my-text<ul><li>café<li>milk<li>sugar</ul></span></div></html>'
 
 
-The `html` function supports different default type `html5, html4, xhtml-strict, xhtml-transitional` ::
+The `html` function supports different default type `html5, html4, xhtml-strict, xhtml-transitional`
+
+.. code-block:: python
 
 
   >>> from pyhiccup.core import html
@@ -49,14 +54,20 @@ The `html` function supports different default type `html5, html4, xhtml-strict,
   >>> html(data, etype='xhtml-strict')
   >>> u'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html lang="en" xml:lang="en" dir="rtl" xmlns="http://www.w3.org/1999/xhtml"/>'
 
-You can pass arbitrary keyword arguments to the `html` they will be transformed into `html` tag attributes ::
+You can pass arbitrary keyword arguments to the `html` they will be transformed into `html` tag attributes
+
+.. code-block:: python
+
 
   >>> from pyhiccup.core import html
   >>> data = []
   >>> html(data, etype='xhtml-strict', an-attr='foo')
   u'... <html an-attr="foo" lang="en" xml:lang="en" dir="rtl" xmlns="http://www.w3.org/1999/xhtml"/>'
 
-Pyhiccup also provides a function to represent XML. Arbitrary keyword arguments are also supported. ::
+Pyhiccup also provides a function to represent XML. Arbitrary keyword arguments are also supported.
+
+.. code-block:: python
+
 
   >>> from pyhiccup.core import xml
   >>> data = ['form-desc',
@@ -66,7 +77,10 @@ Pyhiccup also provides a function to represent XML. Arbitrary keyword arguments 
   u'<?xml version="1.0" encoding="UTF-8"?><foo-ns bar="an_attr"><form-desc><field name="a_name"/><field name="a_other_name"/></form-desc></foo-ns>'
 
 
-Some time you want to be able to create XML/HTML chunk out of a namespace. The `core.convert` is made for this. ::
+Some time you want to be able to create XML/HTML chunk out of a namespace. The `core.convert` is made for this.
+
+.. code-block:: python
+
 
   >>> from pyhiccup.core import convert
   >>> from pyhiccup.element import link_to
@@ -74,7 +88,9 @@ Some time you want to be able to create XML/HTML chunk out of a namespace. The `
   u'<a href="http://github.com/nbessi/pyhiccup">pyhiccup</a>'
 
 
-Helpers are available on the elements namespace. The will help you to add hyperlink, images etc. ::
+Helpers are available on the elements namespace. The will help you to add hyperlink, images etc.
+
+.. code-block:: python
 
 
   >>> from pyhiccup.element import link_to

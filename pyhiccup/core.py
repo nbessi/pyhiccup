@@ -46,7 +46,7 @@ def format_attributes(attributes):
     :rtype: str
     """
     output = []
-    for item in attributes.items():
+    for item in sorted(attributes.items()):
         output.append('%s=\"%s\"' % item)
     return " %s" % ' '.join(output)
 

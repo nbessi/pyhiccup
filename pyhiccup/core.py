@@ -165,3 +165,14 @@ def xml(value, etype, **kwargs):
     enclosing_tag = build_xml_enclosing_tag(etype, **kwargs)
     converted = _inclose_page(declaration, enclosing_tag, value)
     return ''.join(converted)
+
+def convert(value):
+    """Transform a list to arbitratry XML
+
+    :param value: list of list describing XML
+    :type value: list, tuple
+
+    :return: XML string representation
+    :rtype: str, unicode
+    """
+    return ''.join(_convert_tree(value))

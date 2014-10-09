@@ -89,7 +89,7 @@ def _convert_tree(node):
             for ext in inner_trees:
                 for x in _convert_tree(ext):
                     yield x
-            yield '</%s>' % btype
+        yield '</%s>' % btype
     else:
         yield '<%s%s/>' % (
             btype,

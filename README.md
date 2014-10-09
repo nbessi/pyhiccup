@@ -1,11 +1,9 @@
 [![Build Status](https://travis-ci.org/nbessi/pyhiccup.svg?branch=master)](https://travis-ci.org/nbessi/pyhiccup)
 [![Coverage Status](https://img.shields.io/coveralls/nbessi/pyhiccup.svg)](https://coveralls.io/r/nbessi/pyhiccup?branch=master)
-pyhiccup pre-alpha
-==================
+pyhiccup beta
+=============
 
-!! Under heavy development do not use in production !!
-
-Python version of https://github.com/weavejester/hiccup
+Python version of clojure hiccup https://github.com/weavejester/hiccup
 
 
 Pyhiccup is a library for representing HTML in Python. It uses list or tuple
@@ -14,8 +12,8 @@ Supported Python versions are:
 
  - 2.6
  - 2.7
-
-Other Python 2.x version might also be supported.
+ - 3.3
+ - 3.4
 
 Install
 -------
@@ -65,3 +63,12 @@ Pyhiccup also provides a function to represent arbitrary XML. Arbitrary keyword 
 >>> conv = xml(data, 'foo-ns', bar='an_attr')
 >>> u'<?xml version="1.0" encoding="UTF-8"?><foo-ns bar="an_attr"><form-desc><field name="a_name"/><field name="a_other_name"/></form-desc></foo-ns>'
 ```
+
+Helpers are available on the elements namespace. The will help you to add hyperlink, images etc.
+
+```python
+>>> from pyhiccup.element import link_to
+>>> link_to(u'https://github.com/nbessi/pyhiccup', u'pyhiccup' )
+>>> [u'a', {u'href': u'https://github.com/nbessi/pyhiccup'}, u'pyhiccup']
+```
+

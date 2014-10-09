@@ -18,37 +18,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from __future__ import unicode_literals
 import logging
-import re
-try:
-    import unittest2 as unittest
-except ImportError:
-    import unittest
 
 from ..core import html, xml, _logger
-
-CLEAN_REGEX = re.compile('[\t\r\n]')
-
-
-class CommonTest(unittest.TestCase):
-
-    def normalize_result(self, raw_string):
-        """Remove tab, carriage and space around balise
-
-        :param raw_string: HTML/XML to clean
-        :type raw_string: basestring
-
-        :return: normalized string
-        :rtype: str
-
-        """
-        return CLEAN_REGEX.sub('', raw_string)
-
-    def test_normalize_result(self):
-        """Test normalize helper"""
-        raw = u"Hello\t \nWorld"
-        clean = self.normalize_result(raw)
-        self.assertEqual(clean, u"Hello World")
+from .common import CommonTest
 
 
 class HTMLTest(CommonTest):
@@ -62,46 +36,47 @@ class HTMLTest(CommonTest):
               [u'ul', [['li', x] for x in [u'café', u'milk', u'sugar']]]]]
         ]
 
-        awaited = (u'<!DOCTYPE html><html lang="en" xml:lang="en" dir="rtl">'
-                   u'<div data-y="23" class="a-class"><span>my-text<ul>'
-                   u'<li>café<li>milk<li>sugar</ul></span></div></html>')
+        awaited = ('<!DOCTYPE html><html lang="en" xml:lang="en" dir="rtl">'
+                   '<div data-y="23" class="a-class"><span>my-text'
+                   '<ul><li>caf\xe9</li><li>milk</li><li>sugar</li></ul>'
+                   '</span></div></html>')
         conv = html(data)
         self.assertEquals(awaited, self.normalize_result(conv))
 
     def test_html5_doc_type(self):
         """Test HTML 5 DOCTYPE"""
         data = []
-        awaited = u'<!DOCTYPE html><html lang="en" xml:lang="en" dir="rtl"/>'
+        awaited = '<!DOCTYPE html><html lang="en" xml:lang="en" dir="rtl"/>'
         conv = html(data, etype='html5')
         self.assertEquals(awaited, self.normalize_result(conv))
 
     def test_html4_doc_type(self):
         """Test HTML 4 DOCTYPE"""
         data = []
-        awaited = (u'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" '
-                   u'"http://www.w3.org/TR/html4/strict.dtd"><html lang="en"'
-                   u' xml:lang="en" dir="rtl"/>')
+        awaited = ('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" '
+                   '"http://www.w3.org/TR/html4/strict.dtd"><html lang="en"'
+                   ' xml:lang="en" dir="rtl"/>')
         conv = html(data, etype='html4')
         self.assertEquals(awaited, self.normalize_result(conv))
 
     def test_xhtml_strict_doc_type(self):
         """Test XHTML strict DOCTYPE"""
         data = []
-        awaited = (u'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" '
-                   u'"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
-                   u'<html lang="en" xml:lang="en" dir="rtl" '
-                   u'xmlns="http://www.w3.org/1999/xhtml"/>')
+        awaited = ('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" '
+                   '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
+                   '<html lang="en" xml:lang="en" dir="rtl" '
+                   'xmlns="http://www.w3.org/1999/xhtml"/>')
         conv = html(data, etype='xhtml-strict')
         self.assertEquals(awaited, self.normalize_result(conv))
 
     def test_xhtml_transitional_doc_type(self):
         """Test XHTML transitional DOCTYPE"""
         data = []
-        awaited = (u'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML '
-                   u'1.0 Transitional//EN" '
-                   u'"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
-                   u'<html lang="en" xml:lang="en" dir="rtl" '
-                   u'xmlns="http://www.w3.org/1999/xhtml"/>')
+        awaited = ('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML '
+                   '1.0 Transitional//EN" '
+                   '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
+                   '<html lang="en" xml:lang="en" dir="rtl" '
+                   'xmlns="http://www.w3.org/1999/xhtml"/>')
         conv = html(data, etype='xhtml-transitional')
         self.assertEquals(awaited, self.normalize_result(conv))
 
@@ -125,7 +100,7 @@ class XMLTest(CommonTest):
                 ['field', {'name': 'a_name'}],
                 ['field', {'name': 'a_other_name'}]]
         conv = xml(data, 'foo-ns', bar='an_attr')
-        awaited = (u'<?xml version="1.0" encoding="UTF-8"?>'
-                   u'<foo-ns bar="an_attr"><form-desc><field name="a_name"/>'
-                   u'<field name="a_other_name"/></form-desc></foo-ns>')
+        awaited = ('<?xml version="1.0" encoding="UTF-8"?>'
+                   '<foo-ns bar="an_attr"><form-desc><field name="a_name"/>'
+                   '<field name="a_other_name"/></form-desc></foo-ns>')
         self.assertEquals(awaited, self.normalize_result(conv))

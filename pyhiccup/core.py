@@ -23,7 +23,8 @@ import logging
 import copy
 from itertools import chain
 
-from .page import get_doc_type, get_html_enclosing_tag, get_xml_enclosing_tag
+from .page import get_doc_type
+from .page import build_html_enclosing_tag, build_xml_enclosing_tag
 from .page import XMl_DECLARATION
 
 _logger = logging.getLogger('pyhiccup.convert')
@@ -61,8 +62,14 @@ def _convert_tree(node):
     :return: a list of string
     :rtype: list
     """
+    #perfo tweak with side effect
+    if isinstance(node[0], TREE_TYPE):
+        for sub_node in node:
+            for x in _convert_tree(sub_node):
+                yield x
+        return
     btype = node[0]
-    rest = node[1:]
+    rest = node[1:] if len(node) > 1 else []
     attrs = ''
     inner_trees = []
     inner_element = ''
@@ -88,7 +95,7 @@ def _convert_tree(node):
             for ext in inner_trees:
                 for x in _convert_tree(ext):
                     yield x
-            yield '</%s>' % btype
+        yield '</%s>' % btype
     else:
         yield '<%s%s/>' % (
             btype,
@@ -136,7 +143,7 @@ def html(value, etype='html5', **kwargs):
     :rtype: str, unicode
     """
     declaration = get_doc_type(etype)
-    enclosing_tag = get_html_enclosing_tag(etype)
+    enclosing_tag = build_html_enclosing_tag(etype)
     converted = _inclose_page(declaration, enclosing_tag, value)
     return ''.join(converted)
 
@@ -155,6 +162,6 @@ def xml(value, etype, **kwargs):
     :rtype: str, unicode
     """
     declaration = XMl_DECLARATION
-    enclosing_tag = get_xml_enclosing_tag(etype, **kwargs)
+    enclosing_tag = build_xml_enclosing_tag(etype, **kwargs)
     converted = _inclose_page(declaration, enclosing_tag, value)
     return ''.join(converted)

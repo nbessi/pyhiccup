@@ -62,8 +62,14 @@ def _convert_tree(node):
     :return: a list of string
     :rtype: list
     """
+    #perfo tweak with side effect
+    if isinstance(node[0], TREE_TYPE):
+        for sub_node in node:
+            for x in _convert_tree(sub_node):
+                yield x
+        return
     btype = node[0]
-    rest = node[1:]
+    rest = node[1:] if len(node) > 1 else []
     attrs = ''
     inner_trees = []
     inner_element = ''

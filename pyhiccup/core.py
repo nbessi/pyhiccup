@@ -18,6 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from __future__ import unicode_literals
 import logging
 import copy
 from itertools import chain
@@ -62,9 +63,9 @@ def _convert_tree(node):
     """
     btype = node[0]
     rest = node[1:]
-    attrs = u''
+    attrs = ''
     inner_trees = []
-    inner_element = u''
+    inner_element = ''
     for element in rest:
         if not element:
             continue
@@ -78,7 +79,7 @@ def _convert_tree(node):
         else:
             inner_element = element
     if inner_element or inner_trees:
-        yield u'<%s%s>' % (
+        yield '<%s%s>' % (
             btype,
             attrs,
         )
@@ -87,9 +88,9 @@ def _convert_tree(node):
             for ext in inner_trees:
                 for x in _convert_tree(ext):
                     yield x
-            yield u'</%s>' % btype
+            yield '</%s>' % btype
     else:
-        yield u'<%s%s/>' % (
+        yield '<%s%s/>' % (
             btype,
             attrs,
         )

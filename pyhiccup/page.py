@@ -18,22 +18,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from __future__ import unicode_literals
 
 DOC_TYPES = {
-    'html4': u"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" "
-             u"\"http://www.w3.org/TR/html4/strict.dtd\">\n",
+    'html4': "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" "
+             "\"http://www.w3.org/TR/html4/strict.dtd\">\n",
 
-    'xhtml-strict': u"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 ""Strict//EN\" "
-                    u"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n",
+    'xhtml-strict': "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 ""Strict//EN\" "
+                    "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n",
 
-    'xhtml-transitional': u"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" "
-                          u"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n",
+    'xhtml-transitional': "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" "
+                          "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n",
 
-    'html5': u"<!DOCTYPE html>\n",
+    'html5': "<!DOCTYPE html>\n",
 }
 
-DEFAULT_XMLNS = u'http://www.w3.org/1999/xhtml'
-XMl_DECLARATION = u'<?xml version="1.0" encoding="UTF-8"?>'
+DEFAULT_XMLNS = 'http://www.w3.org/1999/xhtml'
+XMl_DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>'
 
 
 def get_doc_type(doc_type):
@@ -67,9 +68,9 @@ def get_html_enclosing_tag(etype, **kwargs):
     """
     attrs = {}
     if etype in DOC_TYPES:
-        attrs[u'lang'] = u'en'
-        attrs[u'dir'] = u'rtl'
-        attrs[u'xml:lang'] = u'en'
+        attrs['lang'] = 'en'
+        attrs['dir'] = 'rtl'
+        attrs['xml:lang'] = 'en'
     if 'xhtml' in etype:
         attrs[u'xmlns'] = DEFAULT_XMLNS
     attrs.update(kwargs)

@@ -8,7 +8,7 @@ pyhiccup beta
 =============
 
 Python version of clojure hiccup https://github.com/weavejester/hiccup
-
+Original concept by James Reeves
 
 Pyhiccup is a library for representing HTML in Python. It uses list or tuple
 to represent elements, and dict to represent an element's attributes.

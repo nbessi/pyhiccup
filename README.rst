@@ -4,8 +4,8 @@
 .. image:: https://coveralls.io/repos/nbessi/pyhiccup/badge.png?branch=master
   :target: https://coveralls.io/r/nbessi/pyhiccup?branch=master
 
-pyhiccup beta
-=============
+pyhiccup 0.1
+============
 
 Python version of clojure hiccup https://github.com/weavejester/hiccup
 Original concept by James Reeves
@@ -23,7 +23,7 @@ Install
 -------
 ::
 
-    pip install pyhiccup --pre
+    pip install pyhiccup
 
 Syntax
 ------

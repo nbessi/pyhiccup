@@ -3,6 +3,7 @@
 #
 #    Author: Nicolas Bessi
 #    Copyright 2014
+#    Original concept by James Reeves
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as
